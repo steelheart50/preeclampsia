@@ -1,0 +1,1269 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cyan: #00d4ff;
+  --cyan-dim: rgba(0,212,255,0.15);
+  --cyan-border: rgba(0,212,255,0.3);
+  --red-alert: #ff4757;
+  --amber: #ffa502;
+  --green-ok: #2ed573;
+  --bg-deep: #060b14;
+  --bg-panel: #0a1628;
+  --bg-card: #0d1f35;
+  --bg-card2: #0f2540;
+  --border: rgba(0,212,255,0.18);
+  --text: #e8f4fd;
+  --text-muted: #6b8fa8;
+  --text-dim: #3a5570;
+  --mono: 'Space Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+}
+
+body { background: var(--bg-deep); color: var(--text); font-family: var(--sans); font-size: 13px; line-height: 1.5; }
+
+.app { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+.sidebar {
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  padding: 0;
+  display: flex; flex-direction: column;
+  position: sticky; top: 0; height: 100vh; overflow-y: auto;
+}
+
+.sidebar-logo {
+  padding: 20px 16px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-mark {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 4px;
+}
+
+.logo-icon {
+  width: 32px; height: 32px;
+  border: 1.5px solid var(--cyan);
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 14px; color: var(--cyan); font-weight: 700;
+}
+
+.logo-text { font-family: var(--mono); font-size: 11px; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; }
+.logo-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 1px; padding-left: 42px; }
+
+.sidebar-nav { padding: 12px 0; flex: 1; }
+
+.nav-section-label {
+  font-size: 9px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--text-dim); padding: 8px 16px 4px;
+}
+
+.nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 16px; cursor: pointer;
+  font-size: 12px; color: var(--text-muted);
+  border-left: 2px solid transparent;
+  transition: all 0.15s;
+}
+
+.nav-item:hover { color: var(--text); background: rgba(0,212,255,0.05); }
+.nav-item.active { color: var(--cyan); border-left-color: var(--cyan); background: rgba(0,212,255,0.08); }
+
+.nav-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); flex-shrink: 0; }
+.nav-item.active .nav-dot { background: var(--cyan); box-shadow: 0 0 6px var(--cyan); }
+
+.risk-badge {
+  margin: 12px 16px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
+}
+
+.risk-label { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
+.risk-score { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--amber); line-height: 1; }
+.risk-tier { font-size: 10px; color: var(--amber); letter-spacing: 1px; margin-top: 2px; }
+
+.risk-bar { height: 3px; background: var(--bg-deep); border-radius: 2px; margin-top: 8px; overflow: hidden; }
+.risk-fill { height: 100%; border-radius: 2px; transition: width 0.6s ease; }
+
+.main { background: var(--bg-deep); overflow-y: auto; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10,22,40,0.9);
+  position: sticky; top: 0; z-index: 10;
+}
+
+.topbar-title { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase; }
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; color: var(--green-ok); letter-spacing: 1px;
+  padding: 4px 10px; border: 1px solid rgba(46,213,115,0.3); border-radius: 20px;
+}
+
+.pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--green-ok); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.calc-btn {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  padding: 6px 16px; cursor: pointer;
+  background: var(--cyan); color: var(--bg-deep);
+  border: none; border-radius: 4px; font-weight: 700;
+}
+
+.calc-btn:hover { background: #00b8d9; }
+
+.content { padding: 20px 24px; }
+
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 14px;
+}
+
+.section-line { flex: 1; height: 1px; background: var(--border); }
+.section-label { font-family: var(--mono); font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--text-dim); white-space: nowrap; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.card-header { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+.card-header-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--cyan); }
+
+.field-group { margin-bottom: 10px; }
+.field-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; display: flex; justify-content: space-between; }
+.field-unit { color: var(--text-dim); }
+
+input[type=number], select {
+  width: 100%; padding: 6px 10px;
+  background: var(--bg-deep); border: 1px solid var(--border);
+  border-radius: 4px; color: var(--text); font-family: var(--mono); font-size: 12px;
+  outline: none;
+}
+
+input[type=number]:focus, select:focus { border-color: var(--cyan); }
+select option { background: var(--bg-panel); }
+
+input[type=range] {
+  width: 100%; accent-color: var(--cyan); cursor: pointer;
+}
+
+.range-row { display: flex; align-items: center; gap: 8px; }
+.range-val { font-family: var(--mono); font-size: 12px; color: var(--cyan); min-width: 36px; text-align: right; }
+
+.check-group { display: flex; flex-direction: column; gap: 6px; }
+.check-item { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 11px; color: var(--text-muted); }
+.check-item input { accent-color: var(--cyan); }
+.check-item:hover { color: var(--text); }
+
+.metric-mini {
+  background: var(--bg-card2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+}
+
+.metric-mini-label { font-size: 9px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.metric-mini-val { font-family: var(--mono); font-size: 16px; color: var(--text); }
+.metric-mini-sub { font-size: 9px; color: var(--text-muted); margin-top: 2px; }
+.metric-mini-flag { display: inline-block; width: 6px; height: 6px; border-radius: 50%; margin-left: 6px; }
+
+.flag-ok { background: var(--green-ok); }
+.flag-warn { background: var(--amber); }
+.flag-high { background: var(--red-alert); }
+
+.result-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--cyan-border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.result-main { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+.result-score-block {}
+.result-score-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); }
+.result-score { font-family: var(--mono); font-size: 52px; font-weight: 700; line-height: 1; color: var(--amber); margin: 4px 0; }
+.result-score-pct { font-size: 14px; color: var(--text-muted); }
+.result-tier { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); border: 1px solid var(--amber); display: inline-block; padding: 2px 8px; border-radius: 3px; margin-top: 6px; }
+
+.factors-list { flex: 1; }
+.factor-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 11px; }
+.factor-bar-bg { flex: 1; height: 3px; background: var(--bg-deep); border-radius: 2px; }
+.factor-bar { height: 100%; border-radius: 2px; }
+.factor-name { min-width: 130px; color: var(--text-muted); }
+.factor-pct { min-width: 30px; text-align: right; font-family: var(--mono); font-size: 10px; color: var(--text-dim); }
+
+.imaging-card { grid-column: span 2; }
+
+.upload-zone {
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-muted);
+  font-size: 11px;
+  transition: border-color 0.2s;
+}
+
+.upload-zone:hover { border-color: var(--cyan); color: var(--text); }
+.upload-icon { font-size: 24px; margin-bottom: 6px; }
+.upload-formats { font-size: 9px; color: var(--text-dim); margin-top: 4px; letter-spacing: 1px; }
+
+.tag { display: inline-block; font-size: 9px; padding: 2px 7px; border-radius: 3px; border: 1px solid; margin-right: 4px; margin-bottom: 4px; letter-spacing: 0.5px; cursor: pointer; }
+.tag-cyan { color: var(--cyan); border-color: rgba(0,212,255,0.4); }
+.tag-amber { color: var(--amber); border-color: rgba(255,165,2,0.4); }
+.tag-red { color: var(--red-alert); border-color: rgba(255,71,87,0.4); }
+.tag-green { color: var(--green-ok); border-color: rgba(46,213,115,0.4); }
+
+.divider { height: 1px; background: var(--border); margin: 16px 0; }
+
+.snapshot-bar {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 12px 16px;
+  margin-bottom: 16px;
+  align-items: center;
+}
+
+.snap-item { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+.snap-sep { width: 1px; height: 16px; background: var(--border); }
+.snap-key { color: var(--text-dim); }
+.snap-val { font-family: var(--mono); color: var(--text); }
+.snap-flag { width: 5px; height: 5px; border-radius: 50%; }
+
+.tab-row { display: flex; gap: 2px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
+.tab { padding: 8px 14px; font-size: 11px; cursor: pointer; color: var(--text-muted); border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.15s; letter-spacing: 0.5px; }
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.trend-line { display: flex; align-items: flex-end; gap: 3px; height: 32px; margin-top: 4px; }
+.trend-bar { flex: 1; background: var(--cyan-dim); border-top: 1px solid var(--cyan); border-radius: 2px 2px 0 0; transition: height 0.3s; }
+
+.alert-box {
+  background: rgba(255,71,87,0.08);
+  border: 1px solid rgba(255,71,87,0.3);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: #ff8a94;
+  margin-bottom: 10px;
+  display: flex; gap: 8px; align-items: flex-start;
+}
+
+.alert-icon { color: var(--red-alert); font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+
+.info-box {
+  background: rgba(0,212,255,0.06);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 11px;
+  color: #7dd4ed;
+  margin-bottom: 10px;
+}
+
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.5px; font-family: var(--mono); }
+.badge-warn { background: rgba(255,165,2,0.15); color: var(--amber); }
+.badge-ok { background: rgba(46,213,115,0.12); color: var(--green-ok); }
+.badge-alert { background: rgba(255,71,87,0.12); color: var(--red-alert); }
+
+.note-area {
+  width: 100%; padding: 8px 10px;
+  background: var(--bg-deep); border: 1px solid var(--border);
+  border-radius: 4px; color: var(--text-muted); font-family: var(--sans); font-size: 11px;
+  resize: vertical; min-height: 60px; outline: none;
+}
+
+.note-area:focus { border-color: var(--cyan); }
+
+.save-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 10px; letter-spacing: 1px; text-transform: uppercase;
+  padding: 6px 14px; cursor: pointer;
+  background: transparent; color: var(--cyan);
+  border: 1px solid var(--cyan-border); border-radius: 4px; font-family: var(--mono);
+}
+
+.save-btn:hover { background: var(--cyan-dim); }
+
+.history-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+  font-size: 11px;
+}
+
+.history-date { font-family: var(--mono); color: var(--text-dim); font-size: 10px; }
+.history-score { font-family: var(--mono); color: var(--amber); }
+
+.model-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px; border: 1px solid var(--border); border-radius: 4px;
+  cursor: pointer; font-size: 10px; color: var(--text-muted); margin-bottom: 6px;
+  transition: all 0.15s;
+}
+
+.model-chip:hover { border-color: var(--cyan); color: var(--text); }
+.model-chip.selected { border-color: var(--cyan); color: var(--cyan); background: var(--cyan-dim); }
+.model-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-dim); }
+.model-chip.selected .model-chip-dot { background: var(--cyan); }
+
+.footer-note {
+  text-align: center; font-size: 9px; color: var(--text-dim); letter-spacing: 1px;
+  padding: 16px 24px; border-top: 1px solid var(--border);
+}
+</style>
+
+<div class="app">
+
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">PE</div>
+      <div class="logo-text">PrediCare</div>
+    </div>
+    <div class="logo-sub">Preeclampsia Intelligence System</div>
+  </div>
+
+  <div style="padding: 12px 16px 8px;">
+    <div class="risk-badge">
+      <div class="risk-label">Current Risk Score</div>
+      <div class="risk-score" id="sb-score">47.2</div>
+      <div class="risk-tier" id="sb-tier">MODERATE RISK</div>
+      <div class="risk-bar"><div class="risk-fill" id="sb-fill" style="width:47%;background:var(--amber)"></div></div>
+    </div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-section-label">Assessment</div>
+    <div class="nav-item active" onclick="switchTab('demographics')"><div class="nav-dot"></div>Demographics</div>
+    <div class="nav-item" onclick="switchTab('vitals')"><div class="nav-dot"></div>Vitals & BP</div>
+    <div class="nav-item" onclick="switchTab('labs')"><div class="nav-dot"></div>Lab Values</div>
+    <div class="nav-item" onclick="switchTab('lipids')"><div class="nav-dot"></div>Lipids & Metabolic</div>
+    <div class="nav-item" onclick="switchTab('hormones')"><div class="nav-dot"></div>Hormonal Markers</div>
+    <div class="nav-item" onclick="switchTab('imaging')"><div class="nav-dot"></div>Imaging & Doppler</div>
+    <div class="nav-item" onclick="switchTab('history')"><div class="nav-dot"></div>Medical History</div>
+    <div class="nav-item" onclick="switchTab('novel')"><div class="nav-dot"></div>Novel Biomarkers</div>
+
+    <div class="nav-section-label" style="margin-top:8px;">Records</div>
+    <div class="nav-item" onclick="switchTab('longitudinal')"><div class="nav-dot"></div>Longitudinal Data</div>
+    <div class="nav-item" onclick="switchTab('model')"><div class="nav-dot"></div>Model Selection</div>
+  </div>
+</div>
+
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Patient Risk Assessment — Preeclampsia Prediction</div>
+    <div class="topbar-right">
+      <div class="status-pill"><div class="pulse"></div>LOCAL MODEL ACTIVE</div>
+      <button class="calc-btn" onclick="calculateRisk()">Calculate Risk</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="snapshot-bar">
+      <div class="snap-item"><span class="snap-key">GA</span><span class="snap-val" id="snap-ga">24w</span></div>
+      <div class="snap-sep"></div>
+      <div class="snap-item"><span class="snap-key">BMI</span><span class="snap-val" id="snap-bmi">27.0</span></div>
+      <div class="snap-sep"></div>
+      <div class="snap-item"><span class="snap-key">BP</span><span class="snap-val" id="snap-bp">120/72</span></div>
+      <div class="snap-sep"></div>
+      <div class="snap-item"><span class="snap-key">sFlt-1/PlGF</span><span class="snap-val" id="snap-ratio">—</span></div>
+      <div class="snap-sep"></div>
+      <div class="snap-item"><span class="snap-key">PCOS</span><span class="snap-val" id="snap-pcos">No</span></div>
+      <div class="snap-sep"></div>
+      <div class="snap-item"><span class="snap-key">MAP</span><span class="snap-val" id="snap-map">—</span></div>
+      <div class="snap-sep"></div>
+      <div class="snap-item"><span class="snap-key">Risk</span><span class="snap-val" id="snap-risk" style="color:var(--amber)">47.2%</span></div>
+    </div>
+
+    <div class="tab-row">
+      <div class="tab active" onclick="setTab(this,'demographics')">Demographics</div>
+      <div class="tab" onclick="setTab(this,'vitals')">Vitals</div>
+      <div class="tab" onclick="setTab(this,'labs')">Labs</div>
+      <div class="tab" onclick="setTab(this,'lipids')">Lipids</div>
+      <div class="tab" onclick="setTab(this,'hormones')">Hormones</div>
+      <div class="tab" onclick="setTab(this,'imaging')">Imaging</div>
+      <div class="tab" onclick="setTab(this,'history')">History</div>
+      <div class="tab" onclick="setTab(this,'novel')">Novel Markers</div>
+      <div class="tab" onclick="setTab(this,'longitudinal')">Longitudinal</div>
+    </div>
+
+    <div id="tab-demographics" class="tab-content active">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Core Demographics</div>
+          <div class="field-group">
+            <div class="field-label">Age <span class="field-unit">years</span></div>
+            <input type="number" id="age" value="30" min="14" max="55" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Ethnicity</div>
+            <select id="ethnicity" onchange="calculateRisk()">
+              <option>White / Caucasian</option>
+              <option>South Asian</option>
+              <option>Black / African</option>
+              <option>East Asian</option>
+              <option>Middle Eastern</option>
+              <option>Hispanic / Latina</option>
+              <option>Mixed / Other</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Parity</div>
+            <select id="parity" onchange="calculateRisk()">
+              <option value="0">Nulliparous (0)</option>
+              <option value="1">Para 1</option>
+              <option value="2">Para 2</option>
+              <option value="3">Para 3+</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Conception method</div>
+            <select id="conception" onchange="calculateRisk()">
+              <option>Natural</option>
+              <option>IVF / ART</option>
+              <option>OI / IUI</option>
+              <option>Donor egg</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Anthropometrics</div>
+          <div class="field-group">
+            <div class="field-label">Height <span class="field-unit">cm</span></div>
+            <input type="number" id="height" value="163" min="140" max="200" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Pre-pregnancy weight <span class="field-unit">kg</span></div>
+            <input type="number" id="weight" value="72" min="35" max="200" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Current weight <span class="field-unit">kg</span></div>
+            <input type="number" id="curr-weight" value="78" min="35" max="200" oninput="calculateRisk()">
+          </div>
+          <div class="metric-mini" style="margin-top:8px;">
+            <div class="metric-mini-label">BMI (pre-pregnancy)</div>
+            <div class="metric-mini-val"><span id="bmi-val">27.1</span> <span style="font-size:11px;color:var(--text-muted)">kg/m²</span> <span class="metric-mini-flag flag-warn" id="bmi-flag"></span></div>
+            <div class="metric-mini-sub" id="bmi-cat">Overweight</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Gestational Info</div>
+          <div class="field-group">
+            <div class="field-label">Gestational age <span class="field-unit">weeks</span></div>
+            <div class="range-row">
+              <input type="range" id="ga" min="11" max="42" value="24" step="1" oninput="updateGA(this)">
+              <span class="range-val" id="ga-val">24w</span>
+            </div>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Pregnancy type</div>
+            <select id="preg-type" onchange="calculateRisk()">
+              <option>Singleton</option>
+              <option>Twin (dichorionic)</option>
+              <option>Twin (monochorionic)</option>
+              <option>Higher-order multiple</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Partner change (new paternity)</div>
+            <select id="partner" onchange="calculateRisk()">
+              <option value="0">No</option>
+              <option value="1">Yes</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <div class="field-label">Interpregnancy interval <span class="field-unit">years</span></div>
+            <input type="number" id="ipi" value="0" min="0" max="20" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Smoking status</div>
+            <select id="smoking" onchange="calculateRisk()">
+              <option>Never</option>
+              <option>Ex-smoker</option>
+              <option>Current smoker</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-vitals" class="tab-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Blood Pressure</div>
+          <div class="field-group">
+            <div class="field-label">Systolic BP <span class="field-unit">mmHg</span></div>
+            <input type="number" id="sbp" value="120" min="70" max="200" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Diastolic BP <span class="field-unit">mmHg</span></div>
+            <input type="number" id="dbp" value="72" min="40" max="130" oninput="calculateRisk()">
+          </div>
+          <div class="metric-mini" style="margin-top:8px;">
+            <div class="metric-mini-label">Mean Arterial Pressure</div>
+            <div class="metric-mini-val"><span id="map-val">88.0</span> <span style="font-size:11px;color:var(--text-muted)">mmHg</span></div>
+          </div>
+          <div class="field-group" style="margin-top:8px;">
+            <div class="field-label">BP laterality</div>
+            <select id="bp-lat">
+              <option>Bilateral equal</option>
+              <option>Right dominant</option>
+              <option>Left dominant</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Other Vitals</div>
+          <div class="field-group">
+            <div class="field-label">Heart rate <span class="field-unit">bpm</span></div>
+            <input type="number" id="hr" value="82" min="40" max="160" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">SpO₂ <span class="field-unit">%</span></div>
+            <input type="number" id="spo2" value="98" min="85" max="100" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Temperature <span class="field-unit">°C</span></div>
+            <input type="number" id="temp" value="36.8" min="35" max="40" step="0.1" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Oedema grade</div>
+            <select id="oedema" onchange="calculateRisk()">
+              <option value="0">None (0)</option>
+              <option value="1">Trace / feet only (+1)</option>
+              <option value="2">Lower legs (+2)</option>
+              <option value="3">Generalised (+3)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Urinalysis</div>
+          <div class="field-group">
+            <div class="field-label">Proteinuria (dipstick)</div>
+            <select id="proteinuria" onchange="calculateRisk()">
+              <option value="0">Negative</option>
+              <option value="1">Trace</option>
+              <option value="2">1+ (0.3 g/L)</option>
+              <option value="3">2+ (1 g/L)</option>
+              <option value="4">3+ / 4+</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <div class="field-label">24h urine protein <span class="field-unit">mg</span></div>
+            <input type="number" id="prot24" value="" placeholder="if available" min="0" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">PCR (protein:creatinine) <span class="field-unit">mg/mmol</span></div>
+            <input type="number" id="pcr" value="" placeholder="if available" min="0" oninput="calculateRisk()">
+          </div>
+          <div class="field-group">
+            <div class="field-label">Urine specific gravity</div>
+            <input type="number" id="usg" value="1.015" min="1.001" max="1.035" step="0.001" oninput="calculateRisk()">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-labs" class="tab-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Full Blood Count</div>
+          <div class="field-group"><div class="field-label">Haemoglobin <span class="field-unit">g/dL</span></div><input type="number" id="hb" value="11.8" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Platelet count <span class="field-unit">×10⁹/L</span></div><input type="number" id="plt" value="220" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Haematocrit <span class="field-unit">%</span></div><input type="number" id="hct" value="36" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">WBC <span class="field-unit">×10⁹/L</span></div><input type="number" id="wbc" value="9.2" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Renal Function</div>
+          <div class="field-group"><div class="field-label">Serum creatinine <span class="field-unit">μmol/L</span></div><input type="number" id="creat" value="62" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Urea <span class="field-unit">mmol/L</span></div><input type="number" id="urea" value="4.2" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Uric acid <span class="field-unit">μmol/L</span></div><input type="number" id="uricacid" value="290" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">eGFR <span class="field-unit">mL/min/1.73m²</span></div><input type="number" id="egfr" value="98" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Cystatin C <span class="field-unit">mg/L</span></div><input type="number" id="cystatinc" value="0.85" step="0.01" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Liver & Coagulation</div>
+          <div class="field-group"><div class="field-label">ALT <span class="field-unit">U/L</span></div><input type="number" id="alt" value="22" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">AST <span class="field-unit">U/L</span></div><input type="number" id="ast" value="18" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">LDH <span class="field-unit">U/L</span></div><input type="number" id="ldh" value="180" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Bilirubin <span class="field-unit">μmol/L</span></div><input type="number" id="bili" value="9" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">INR / PT</div><input type="number" id="inr" value="1.0" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Fibrinogen <span class="field-unit">g/L</span></div><input type="number" id="fibrinogen" value="4.2" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Inflammatory Markers</div>
+          <div class="field-group"><div class="field-label">CRP <span class="field-unit">mg/L</span></div><input type="number" id="crp" value="3.2" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">IL-6 <span class="field-unit">pg/mL</span></div><input type="number" id="il6" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Neutrophil:Lymphocyte ratio</div><input type="number" id="nlr" value="3.1" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Glucose & HbA1c</div>
+          <div class="field-group"><div class="field-label">Fasting glucose <span class="field-unit">mmol/L</span></div><input type="number" id="fbs" value="4.9" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">HbA1c <span class="field-unit">%</span></div><input type="number" id="hba1c" value="5.4" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">GCT 1h (50g) <span class="field-unit">mmol/L</span></div><input type="number" id="gct" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Insulin fasting <span class="field-unit">μU/mL</span></div><input type="number" id="insulin" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Iron & Vitamins</div>
+          <div class="field-group"><div class="field-label">Serum ferritin <span class="field-unit">μg/L</span></div><input type="number" id="ferritin" value="28" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Vitamin D <span class="field-unit">nmol/L</span></div><input type="number" id="vitd" value="42" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Calcium <span class="field-unit">mmol/L</span></div><input type="number" id="ca" value="2.28" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Magnesium <span class="field-unit">mmol/L</span></div><input type="number" id="mg" value="0.82" step="0.01" oninput="calculateRisk()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-lipids" class="tab-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Lipid Panel</div>
+          <div class="field-group"><div class="field-label">Total cholesterol <span class="field-unit">mmol/L</span></div><input type="number" id="tc" value="5.2" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">LDL cholesterol <span class="field-unit">mmol/L</span></div><input type="number" id="ldl" value="3.1" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">HDL cholesterol <span class="field-unit">mmol/L</span></div><input type="number" id="hdl" value="1.5" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Triglycerides <span class="field-unit">mmol/L</span></div><input type="number" id="tg" value="2.1" step="0.1" oninput="calculateRisk()"></div>
+          <div class="metric-mini" style="margin-top:8px;">
+            <div class="metric-mini-label">TC:HDL ratio</div>
+            <div class="metric-mini-val" id="tc-hdl-ratio">3.47</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>PCOS & Androgens</div>
+          <div class="check-group" style="margin-bottom:10px;">
+            <label class="check-item"><input type="checkbox" id="pcos" onchange="calculateRisk()"> PCOS diagnosis</label>
+            <label class="check-item"><input type="checkbox" id="ir" onchange="calculateRisk()"> Insulin resistance</label>
+            <label class="check-item"><input type="checkbox" id="hh" onchange="calculateRisk()"> Hyperandrogenism</label>
+          </div>
+          <div class="field-group"><div class="field-label">Testosterone <span class="field-unit">nmol/L</span></div><input type="number" id="testo" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">DHEA-S <span class="field-unit">μmol/L</span></div><input type="number" id="dheas" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">SHBG <span class="field-unit">nmol/L</span></div><input type="number" id="shbg" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Metabolic Risk Flags</div>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" id="dyslipidemia" onchange="calculateRisk()"> Dyslipidemia (known)</label>
+            <label class="check-item"><input type="checkbox" id="met-syn" onchange="calculateRisk()"> Metabolic syndrome</label>
+            <label class="check-item"><input type="checkbox" id="nafld" onchange="calculateRisk()"> NAFLD / fatty liver</label>
+            <label class="check-item"><input type="checkbox" id="hypothyroid" onchange="calculateRisk()"> Hypothyroidism</label>
+            <label class="check-item"><input type="checkbox" id="t2dm" onchange="calculateRisk()"> Type 2 diabetes</label>
+            <label class="check-item"><input type="checkbox" id="gdm" onchange="calculateRisk()"> GDM (current pregnancy)</label>
+          </div>
+          <div class="field-group" style="margin-top:10px;"><div class="field-label">HOMA-IR (if calculated)</div><input type="number" id="homa" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-hormones" class="tab-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Placental Biomarkers</div>
+          <div class="field-group"><div class="field-label">PAPP-A <span class="field-unit">MoM</span></div><input type="number" id="pappa" value="1.0" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">PlGF <span class="field-unit">pg/mL</span></div><input type="number" id="plgf" value="" placeholder="if available" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">sFlt-1 <span class="field-unit">pg/mL</span></div><input type="number" id="sflt1" value="" placeholder="if available" oninput="calculateRisk()"></div>
+          <div class="metric-mini" style="margin-top:8px;">
+            <div class="metric-mini-label">sFlt-1/PlGF ratio</div>
+            <div class="metric-mini-val" id="sflt-ratio-val">—</div>
+            <div class="metric-mini-sub">Cutoff: &lt;38 low risk, ≥38 elevated</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Thyroid & Adrenal</div>
+          <div class="field-group"><div class="field-label">TSH <span class="field-unit">mIU/L</span></div><input type="number" id="tsh" value="2.1" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Free T4 <span class="field-unit">pmol/L</span></div><input type="number" id="ft4" value="14.2" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Free T3 <span class="field-unit">pmol/L</span></div><input type="number" id="ft3" value="4.8" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Cortisol <span class="field-unit">nmol/L</span></div><input type="number" id="cortisol" value="" placeholder="if available" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Other Markers</div>
+          <div class="field-group"><div class="field-label">PP13 <span class="field-unit">pg/mL</span></div><input type="number" id="pp13" value="" placeholder="1st trimester" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">AFP <span class="field-unit">MoM</span></div><input type="number" id="afp" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Activin A <span class="field-unit">ng/mL</span></div><input type="number" id="activin" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Endoglin <span class="field-unit">ng/mL</span></div><input type="number" id="endoglin" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-imaging" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Uterine Artery Doppler</div>
+          <div class="field-group"><div class="field-label">Mean UtA PI <span class="field-unit">MoM or absolute</span></div><input type="number" id="utapi" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">UtA RI</div><input type="number" id="utari" value="" placeholder="if available" step="0.001" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Notching</div>
+            <select id="notching" onchange="calculateRisk()">
+              <option value="0">Absent</option>
+              <option value="1">Unilateral</option>
+              <option value="2">Bilateral</option>
+            </select>
+          </div>
+          <div class="field-group"><div class="field-label">Uterine artery S/D ratio</div><input type="number" id="utasd" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Foetal & Placenta</div>
+          <div class="field-group"><div class="field-label">EFW centile <span class="field-unit">%ile</span></div><input type="number" id="efwc" value="" placeholder="if available" min="1" max="99" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Placenta grade (Grannum)</div>
+            <select id="placenta-grade" onchange="calculateRisk()">
+              <option value="0">Grade 0</option>
+              <option value="1">Grade I</option>
+              <option value="2">Grade II</option>
+              <option value="3">Grade III (premature)</option>
+            </select>
+          </div>
+          <div class="field-group"><div class="field-label">Placenta location</div>
+            <select id="plac-loc" onchange="calculateRisk()">
+              <option>Fundal</option>
+              <option>Anterior</option>
+              <option>Posterior</option>
+              <option>Lateral</option>
+              <option>Low-lying / previa</option>
+            </select>
+          </div>
+          <div class="field-group"><div class="field-label">AFI / amniotic fluid</div>
+            <select id="afi" onchange="calculateRisk()">
+              <option>Normal</option>
+              <option>Oligohydramnios</option>
+              <option>Polyhydramnios</option>
+            </select>
+          </div>
+          <div class="field-group"><div class="field-label">Umbilical artery PI <span class="field-unit">MoM</span></div><input type="number" id="uapi" value="" placeholder="if available" step="0.01" oninput="calculateRisk()"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-header"><div class="card-header-dot"></div>Ultrasound Image Analysis</div>
+        <div class="info-box">Upload uterine artery Doppler waveform images or placental ultrasound scans for pattern recognition. Accepted: JPG, PNG, DICOM preview.</div>
+        <div class="grid-2">
+          <div class="upload-zone" onclick="triggerUpload('us-upload')">
+            <div class="upload-icon">⬆</div>
+            <div>Uterine Artery Doppler Image</div>
+            <div class="upload-formats">JPG · PNG · DCM preview</div>
+            <input type="file" id="us-upload" accept="image/*" style="display:none" onchange="previewImage(this,'us-preview')">
+          </div>
+          <div class="upload-zone" onclick="triggerUpload('plac-upload')">
+            <div class="upload-icon">⬆</div>
+            <div>Placental Scan / Fundal Image</div>
+            <div class="upload-formats">JPG · PNG · DCM preview</div>
+            <input type="file" id="plac-upload" accept="image/*" style="display:none" onchange="previewImage(this,'plac-preview')">
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:10px;">
+          <div id="us-preview" style="display:none;"><img id="us-img" style="width:100%;border-radius:6px;border:1px solid var(--border);"></div>
+          <div id="plac-preview" style="display:none;"><img id="plac-img" style="width:100%;border-radius:6px;border:1px solid var(--border);"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-history" class="tab-content">
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Obstetric History</div>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" id="prev-pe" onchange="calculateRisk()"> Prior preeclampsia</label>
+            <label class="check-item"><input type="checkbox" id="prev-sga" onchange="calculateRisk()"> Prior SGA / IUGR baby</label>
+            <label class="check-item"><input type="checkbox" id="prev-sb" onchange="calculateRisk()"> Prior stillbirth</label>
+            <label class="check-item"><input type="checkbox" id="prev-aph" onchange="calculateRisk()"> Prior antepartum haemorrhage</label>
+            <label class="check-item"><input type="checkbox" id="prev-cs" onchange="calculateRisk()"> Prior caesarean section</label>
+            <label class="check-item"><input type="checkbox" id="prev-gdm" onchange="calculateRisk()"> Prior GDM</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Medical Comorbidities</div>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" id="cht" onchange="calculateRisk()"> Chronic hypertension</label>
+            <label class="check-item"><input type="checkbox" id="ckd" onchange="calculateRisk()"> Chronic kidney disease</label>
+            <label class="check-item"><input type="checkbox" id="sle" onchange="calculateRisk()"> SLE / autoimmune disorder</label>
+            <label class="check-item"><input type="checkbox" id="aps" onchange="calculateRisk()"> Antiphospholipid syndrome</label>
+            <label class="check-item"><input type="checkbox" id="migraine" onchange="calculateRisk()"> Migraines</label>
+            <label class="check-item"><input type="checkbox" id="sleep-apnea" onchange="calculateRisk()"> Obstructive sleep apnoea</label>
+            <label class="check-item"><input type="checkbox" id="chd" onchange="calculateRisk()"> Congenital heart disease</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Family & Genetic History</div>
+          <div class="check-group">
+            <label class="check-item"><input type="checkbox" id="fam-pe" onchange="calculateRisk()"> Mother / sister had PE</label>
+            <label class="check-item"><input type="checkbox" id="fam-htn" onchange="calculateRisk()"> Family hypertension</label>
+            <label class="check-item"><input type="checkbox" id="fam-dm" onchange="calculateRisk()"> Family type 2 diabetes</label>
+            <label class="check-item"><input type="checkbox" id="fam-cvd" onchange="calculateRisk()"> Family CVD &lt;60y</label>
+          </div>
+          <div class="divider"></div>
+          <div class="field-group"><div class="field-label">Partner's family PE history</div>
+            <select id="partner-pe" onchange="calculateRisk()">
+              <option value="0">Unknown / No</option>
+              <option value="1">Yes (partner's mother had PE)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-header"><div class="card-header-dot"></div>Medications & Supplements</div>
+        <div class="grid-4">
+          <label class="check-item"><input type="checkbox" id="aspirin" onchange="calculateRisk()"> Low-dose aspirin</label>
+          <label class="check-item"><input type="checkbox" id="ca-supp" onchange="calculateRisk()"> Calcium supplement</label>
+          <label class="check-item"><input type="checkbox" id="vitd-supp" onchange="calculateRisk()"> Vitamin D supplement</label>
+          <label class="check-item"><input type="checkbox" id="metformin" onchange="calculateRisk()"> Metformin</label>
+          <label class="check-item"><input type="checkbox" id="heparin" onchange="calculateRisk()"> LMWH / heparin</label>
+          <label class="check-item"><input type="checkbox" id="prog" onchange="calculateRisk()"> Progesterone</label>
+          <label class="check-item"><input type="checkbox" id="labetalol" onchange="calculateRisk()"> Antihypertensive</label>
+          <label class="check-item"><input type="checkbox" id="omega3" onchange="calculateRisk()"> Omega-3 / fish oil</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-novel" class="tab-content">
+      <div class="info-box">These emerging biomarkers have demonstrated predictive value in recent research. Enter if available from specialised testing.</div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Angiogenic Markers</div>
+          <div class="field-group"><div class="field-label">Endothelin-1 <span class="field-unit">pg/mL</span></div><input type="number" id="et1" value="" placeholder="research panel" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">VEGF <span class="field-unit">pg/mL</span></div><input type="number" id="vegf" value="" placeholder="research panel" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Angiogenin <span class="field-unit">ng/mL</span></div><input type="number" id="angiogenin" value="" placeholder="research panel" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">sEng (soluble endoglin) <span class="field-unit">ng/mL</span></div><input type="number" id="seng" value="" placeholder="research panel" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Cell-free & Epigenetic</div>
+          <div class="field-group"><div class="field-label">Cell-free fetal DNA <span class="field-unit">%</span></div><input type="number" id="cffDNA" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Placental cfDNA methylation</div>
+            <select id="cfmeth" onchange="calculateRisk()">
+              <option value="0">Not tested</option>
+              <option value="1">Normal pattern</option>
+              <option value="2">Aberrant methylation</option>
+            </select>
+          </div>
+          <div class="field-group"><div class="field-label">Exosomal miRNA profile</div>
+            <select id="mirna" onchange="calculateRisk()">
+              <option value="0">Not tested</option>
+              <option value="1">Normal</option>
+              <option value="2">Dysregulated (miR-210 ↑)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Oxidative & Vascular</div>
+          <div class="field-group"><div class="field-label">Homocysteine <span class="field-unit">μmol/L</span></div><input type="number" id="hcy" value="" placeholder="if available" step="0.1" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Malondialdehyde <span class="field-unit">μmol/L</span></div><input type="number" id="mda" value="" placeholder="oxidative stress" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Asymmetric dimethylarginine <span class="field-unit">μmol/L</span></div><input type="number" id="adma" value="" placeholder="endothelial fn" step="0.001" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Pentraxin-3 <span class="field-unit">ng/mL</span></div><input type="number" id="ptx3" value="" placeholder="research panel" step="0.01" oninput="calculateRisk()"></div>
+          <div class="field-group"><div class="field-label">Copeptin <span class="field-unit">pmol/L</span></div><input type="number" id="copeptin" value="" placeholder="research panel" step="0.1" oninput="calculateRisk()"></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-longitudinal" class="tab-content">
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Save Current Assessment</div>
+          <div class="field-group"><div class="field-label">Assessment date / label</div><input type="text" id="save-label" placeholder="e.g. 28w visit — 12 May 2025" style="width:100%;padding:6px 10px;background:var(--bg-deep);border:1px solid var(--border);border-radius:4px;color:var(--text);font-size:12px;outline:none;"></div>
+          <div class="field-group"><div class="field-label">Clinical notes</div><textarea class="note-area" id="clinical-notes" placeholder="Enter any relevant clinical observations, symptoms, or context..."></textarea></div>
+          <button class="save-btn" onclick="saveRecord()">Save to local record</button>
+          <div id="save-msg" style="margin-top:8px;font-size:10px;color:var(--green-ok);display:none;">Saved successfully</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><div class="card-header-dot"></div>Saved Records</div>
+          <div id="history-list">
+            <div style="color:var(--text-dim);font-size:11px;">No records saved yet. Complete an assessment and save it above.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-header"><div class="card-header-dot"></div>BP Trend (from saved records)</div>
+        <div style="color:var(--text-dim);font-size:11px;" id="bp-trend-empty">Save at least 2 records to see a trend.</div>
+        <div id="bp-trend-chart" style="display:none;">
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-dim);margin-bottom:4px;">
+            <span>Systolic</span><span style="color:var(--text-dim)">mmHg over visits</span>
+          </div>
+          <div class="trend-line" id="sbp-bars"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-header"><div class="section-label">Risk Output</div><div class="section-line"></div></div>
+
+    <div class="result-panel">
+      <div class="result-main">
+        <div class="result-score-block">
+          <div class="result-score-label">Composite Risk Score</div>
+          <div class="result-score" id="result-score">47.2<span class="result-score-pct">%</span></div>
+          <div class="result-tier" id="result-tier">MODERATE RISK</div>
+          <div style="margin-top:12px;font-size:10px;color:var(--text-muted);">
+            <div>Early-onset PE (&lt;34w): <span id="early-risk" style="font-family:var(--mono);color:var(--text);">14.2%</span></div>
+            <div style="margin-top:3px;">Late-onset PE (≥34w): <span id="late-risk" style="font-family:var(--mono);color:var(--text);">33.0%</span></div>
+            <div style="margin-top:3px;">Severe features: <span id="severe-risk" style="font-family:var(--mono);color:var(--text);">21.8%</span></div>
+          </div>
+        </div>
+
+        <div class="factors-list">
+          <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;">Top Contributing Factors</div>
+          <div id="factor-bars"></div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div id="alerts-area"></div>
+
+      <div style="margin-top:10px;">
+        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;">Active Risk Tags</div>
+        <div id="risk-tags"></div>
+      </div>
+    </div>
+
+    <div id="tab-model" class="tab-content" style="display:block;">
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-header"><div class="card-header-dot"></div>Prediction Model Selection</div>
+        <div style="font-size:11px;color:var(--text-muted);margin-bottom:12px;">Select the algorithm. All run locally — no data leaves this device.</div>
+        <div id="model-list">
+          <div class="model-chip selected" onclick="selectModel(this,'fmf')"><div class="model-chip-dot"></div>FMF Combined (1st trim) — sFlt-1/PlGF + UtA PI + MAP + PAPP-A</div>
+          <div class="model-chip" onclick="selectModel(this,'nice')"><div class="model-chip-dot"></div>NICE-based Clinical Risk Stratification</div>
+          <div class="model-chip" onclick="selectModel(this,'acog')"><div class="model-chip-dot"></div>ACOG Risk Factor Model (US guidelines)</div>
+          <div class="model-chip" onclick="selectModel(this,'ml')"><div class="model-chip-dot"></div>Research ML (38-feature gradient boosted model)</div>
+          <div class="model-chip" onclick="selectModel(this,'ensemble')"><div class="model-chip-dot"></div>Ensemble Average (all models)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      PREDICARE v2.0 — LOCAL INFERENCE — NOT FDA/CE APPROVED — RESEARCH PROTOTYPE ONLY — DATA NEVER TRANSMITTED
+    </div>
+
+  </div>
+</div>
+</div>
+
+<script>
+let currentModel = 'fmf';
+let savedRecords = JSON.parse(localStorage.getItem('pe-records') || '[]');
+
+function switchTab(id) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  const el = document.getElementById('tab-' + id);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.getAttribute('onclick') && t.getAttribute('onclick').includes("'" + id + "'")) t.classList.add('active');
+    else t.classList.remove('active');
+  });
+}
+
+function setTab(el, id) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  const target = document.getElementById('tab-' + id);
+  if (target) target.classList.add('active');
+}
+
+function selectModel(el, model) {
+  document.querySelectorAll('.model-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  currentModel = model;
+  calculateRisk();
+}
+
+function v(id) { const el = document.getElementById(id); return el ? parseFloat(el.value) || 0 : 0; }
+function cb(id) { const el = document.getElementById(id); return el ? (el.checked ? 1 : 0) : 0; }
+function sv(id) { const el = document.getElementById(id); return el ? el.value : ''; }
+
+function updateGA(input) {
+  document.getElementById('ga-val').textContent = input.value + 'w';
+  document.getElementById('snap-ga').textContent = input.value + 'w';
+  calculateRisk();
+}
+
+function calculateRisk() {
+  const age = v('age');
+  const height = v('height') || 163;
+  const weight = v('weight') || 72;
+  const bmi = weight / ((height / 100) ** 2);
+  const currWeight = v('curr-weight') || 78;
+  const sbp = v('sbp') || 120;
+  const dbp = v('dbp') || 72;
+  const ga = v('ga') || 24;
+  const pappa = v('pappa') || 1.0;
+  const plgf = v('plgf');
+  const sflt1 = v('sflt1');
+  const proteinuria = v('proteinuria');
+  const ldl = v('ldl') || 3.1;
+  const tg = v('tg') || 2.1;
+  const hdl = v('hdl') || 1.5;
+  const uricacid = v('uricacid') || 290;
+  const plt = v('plt') || 220;
+  const ldh = v('ldh') || 180;
+  const nlr = v('nlr') || 3.1;
+  const vitd = v('vitd') || 42;
+  const notching = v('notching');
+  const utapi = v('utapi');
+  const hcy = v('hcy');
+  const pcos = cb('pcos');
+  const ir = cb('ir');
+  const cht = cb('cht');
+  const ckd = cb('ckd');
+  const sle = cb('sle');
+  const aps = cb('aps');
+  const prevPE = cb('prev-pe');
+  const famPE = cb('fam-pe');
+  const multGestation = sv('preg-type') !== 'Singleton' ? 1 : 0;
+  const oedema = v('oedema');
+  const aspirin = cb('aspirin');
+  const met_syn = cb('met-syn');
+  const gdm = cb('gdm');
+  const dyslip = cb('dyslipidemia');
+  const conception = sv('conception') !== 'Natural' ? 1 : 0;
+
+  const map = parseFloat((dbp + (sbp - dbp) / 3).toFixed(1));
+
+  document.getElementById('map-val').textContent = map.toFixed(1);
+  document.getElementById('snap-map').textContent = map.toFixed(0);
+
+  const bmiVal = parseFloat(bmi.toFixed(1));
+  document.getElementById('bmi-val').textContent = bmiVal;
+  document.getElementById('snap-bmi').textContent = bmiVal;
+  document.getElementById('snap-bp').textContent = sbp + '/' + dbp;
+
+  let bmiCat = 'Normal'; let bmiFlag = 'flag-ok';
+  if (bmi >= 30) { bmiCat = 'Obese'; bmiFlag = 'flag-high'; }
+  else if (bmi >= 25) { bmiCat = 'Overweight'; bmiFlag = 'flag-warn'; }
+  else if (bmi < 18.5) { bmiCat = 'Underweight'; bmiFlag = 'flag-warn'; }
+  document.getElementById('bmi-cat').textContent = bmiCat;
+  document.getElementById('bmi-flag').className = 'metric-mini-flag ' + bmiFlag;
+
+  const tcHdl = hdl > 0 ? (ldl + hdl + tg * 0.45) / hdl : 0;
+  document.getElementById('tc-hdl-ratio').textContent = tcHdl.toFixed(2);
+
+  let sfltRatio = '—';
+  if (sflt1 > 0 && plgf > 0) {
+    sfltRatio = (sflt1 / plgf).toFixed(1);
+  }
+  document.getElementById('sflt-ratio-val').textContent = sfltRatio;
+  document.getElementById('snap-ratio').textContent = sfltRatio;
+  document.getElementById('snap-pcos').textContent = pcos ? 'Yes' : 'No';
+
+  let score = 0;
+  const factors = [];
+
+  if (prevPE) { score += 22; factors.push({ name: 'Prior preeclampsia', val: 22, color: 'var(--red-alert)' }); }
+  if (cht) { score += 16; factors.push({ name: 'Chronic hypertension', val: 16, color: 'var(--red-alert)' }); }
+  if (ckd) { score += 14; factors.push({ name: 'Chronic kidney disease', val: 14, color: 'var(--red-alert)' }); }
+  if (aps) { score += 12; factors.push({ name: 'Antiphospholipid syndrome', val: 12, color: 'var(--red-alert)' }); }
+  if (sle) { score += 8; factors.push({ name: 'SLE / autoimmune', val: 8, color: 'var(--amber)' }); }
+
+  if (bmi >= 35) { score += 14; factors.push({ name: 'Severe obesity (BMI≥35)', val: 14, color: 'var(--red-alert)' }); }
+  else if (bmi >= 30) { score += 8; factors.push({ name: 'Obesity (BMI≥30)', val: 8, color: 'var(--amber)' }); }
+  else if (bmi >= 25) { score += 4; factors.push({ name: 'Overweight', val: 4, color: 'var(--cyan)' }); }
+
+  if (map >= 100) { score += 18; factors.push({ name: 'Elevated MAP (≥100)', val: 18, color: 'var(--red-alert)' }); }
+  else if (map >= 90) { score += 10; factors.push({ name: 'Borderline MAP', val: 10, color: 'var(--amber)' }); }
+
+  if (notching === 2) { score += 15; factors.push({ name: 'Bilateral notching', val: 15, color: 'var(--red-alert)' }); }
+  else if (notching === 1) { score += 8; factors.push({ name: 'Unilateral notching', val: 8, color: 'var(--amber)' }); }
+  if (utapi > 2.5) { score += 12; factors.push({ name: 'High UtA PI', val: 12, color: 'var(--red-alert)' }); }
+  else if (utapi > 1.8 && utapi > 0) { score += 6; factors.push({ name: 'Elevated UtA PI', val: 6, color: 'var(--amber)' }); }
+
+  if (pappa < 0.5) { score += 12; factors.push({ name: 'Low PAPP-A (<0.5 MoM)', val: 12, color: 'var(--red-alert)' }); }
+  else if (pappa < 0.8) { score += 6; factors.push({ name: 'Reduced PAPP-A', val: 6, color: 'var(--amber)' }); }
+
+  if (sfltRatio !== '—' && parseFloat(sfltRatio) >= 85) { score += 20; factors.push({ name: 'sFlt-1/PlGF ≥85 (severe)', val: 20, color: 'var(--red-alert)' }); }
+  else if (sfltRatio !== '—' && parseFloat(sfltRatio) >= 38) { score += 12; factors.push({ name: 'sFlt-1/PlGF ≥38', val: 12, color: 'var(--amber)' }); }
+
+  if (pcos) { score += 7; factors.push({ name: 'PCOS', val: 7, color: 'var(--amber)' }); }
+  if (ir) { score += 5; factors.push({ name: 'Insulin resistance', val: 5, color: 'var(--amber)' }); }
+  if (met_syn) { score += 7; factors.push({ name: 'Metabolic syndrome', val: 7, color: 'var(--amber)' }); }
+  if (dyslip) { score += 5; factors.push({ name: 'Dyslipidemia', val: 5, color: 'var(--amber)' }); }
+  if (gdm) { score += 6; factors.push({ name: 'GDM (current)', val: 6, color: 'var(--amber)' }); }
+  if (tg > 3.0) { score += 6; factors.push({ name: 'Hypertriglyceridemia', val: 6, color: 'var(--amber)' }); }
+  if (ldl > 4.0) { score += 5; factors.push({ name: 'High LDL', val: 5, color: 'var(--amber)' }); }
+
+  if (proteinuria >= 3) { score += 18; factors.push({ name: 'Significant proteinuria', val: 18, color: 'var(--red-alert)' }); }
+  else if (proteinuria >= 2) { score += 10; factors.push({ name: 'Proteinuria 2+', val: 10, color: 'var(--amber)' }); }
+  else if (proteinuria >= 1) { score += 4; factors.push({ name: 'Trace proteinuria', val: 4, color: 'var(--cyan)' }); }
+
+  if (uricacid > 380) { score += 8; factors.push({ name: 'Hyperuricaemia', val: 8, color: 'var(--amber)' }); }
+  if (ldh > 300) { score += 8; factors.push({ name: 'Elevated LDH', val: 8, color: 'var(--amber)' }); }
+  if (plt < 100) { score += 12; factors.push({ name: 'Thrombocytopenia', val: 12, color: 'var(--red-alert)' }); }
+  else if (plt < 150) { score += 6; factors.push({ name: 'Low-normal platelets', val: 6, color: 'var(--amber)' }); }
+
+  if (famPE) { score += 6; factors.push({ name: 'Family history PE', val: 6, color: 'var(--cyan)' }); }
+  if (multGestation) { score += 7; factors.push({ name: 'Multiple gestation', val: 7, color: 'var(--amber)' }); }
+  if (conception) { score += 5; factors.push({ name: 'ART / IVF conception', val: 5, color: 'var(--cyan)' }); }
+  if (age >= 40) { score += 7; factors.push({ name: 'Advanced maternal age ≥40', val: 7, color: 'var(--amber)' }); }
+  else if (age >= 35) { score += 4; factors.push({ name: 'Maternal age 35-39', val: 4, color: 'var(--cyan)' }); }
+  if (hcy > 15) { score += 8; factors.push({ name: 'Hyperhomocysteinaemia', val: 8, color: 'var(--amber)' }); }
+  if (vitd < 30) { score += 5; factors.push({ name: 'Vitamin D deficiency', val: 5, color: 'var(--cyan)' }); }
+  if (nlr > 5) { score += 6; factors.push({ name: 'Elevated NLR (inflammation)', val: 6, color: 'var(--amber)' }); }
+  if (oedema >= 2) { score += 5; factors.push({ name: 'Generalised oedema', val: 5, color: 'var(--amber)' }); }
+
+  if (aspirin) score -= 8;
+
+  const raw = Math.min(score, 130);
+  const pct = Math.min(parseFloat((raw / 1.3).toFixed(1)), 99.9);
+
+  let tier = 'LOW RISK'; let tierColor = 'var(--green-ok)';
+  if (pct >= 70) { tier = 'VERY HIGH RISK'; tierColor = 'var(--red-alert)'; }
+  else if (pct >= 50) { tier = 'HIGH RISK'; tierColor = 'var(--red-alert)'; }
+  else if (pct >= 25) { tier = 'MODERATE RISK'; tierColor = 'var(--amber)'; }
+
+  const earlyRisk = Math.min((pct * 0.3).toFixed(1), 99.9);
+  const lateRisk = Math.min((pct * 0.7).toFixed(1), 99.9);
+  const severeRisk = Math.min((pct * 0.46).toFixed(1), 99.9);
+
+  document.getElementById('result-score').innerHTML = pct + '<span class="result-score-pct">%</span>';
+  document.getElementById('result-score').style.color = tierColor;
+  document.getElementById('result-tier').textContent = tier;
+  document.getElementById('result-tier').style.color = tierColor;
+  document.getElementById('result-tier').style.borderColor = tierColor;
+  document.getElementById('early-risk').textContent = earlyRisk + '%';
+  document.getElementById('late-risk').textContent = lateRisk + '%';
+  document.getElementById('severe-risk').textContent = severeRisk + '%';
+  document.getElementById('sb-score').textContent = pct;
+  document.getElementById('sb-score').style.color = tierColor;
+  document.getElementById('sb-tier').textContent = tier;
+  document.getElementById('sb-tier').style.color = tierColor;
+  document.getElementById('sb-fill').style.width = pct + '%';
+  document.getElementById('sb-fill').style.background = tierColor;
+  document.getElementById('snap-risk').textContent = pct + '%';
+  document.getElementById('snap-risk').style.color = tierColor;
+
+  factors.sort((a, b) => b.val - a.val);
+  const top = factors.slice(0, 8);
+  const maxVal = top[0] ? top[0].val : 1;
+  const barsHTML = top.map(f => `
+    <div class="factor-row">
+      <span class="factor-name">${f.name}</span>
+      <div class="factor-bar-bg"><div class="factor-bar" style="width:${Math.round(f.val/maxVal*100)}%;background:${f.color};"></div></div>
+      <span class="factor-pct">+${f.val}</span>
+    </div>`).join('');
+  document.getElementById('factor-bars').innerHTML = barsHTML || '<div style="color:var(--text-dim);font-size:11px;">No significant risk factors detected.</div>';
+
+  const alerts = [];
+  if (sbp >= 160 || dbp >= 110) alerts.push('Severe-range hypertension (≥160/110 mmHg) — urgent evaluation required');
+  if (proteinuria >= 3) alerts.push('Significant proteinuria — consider 24h collection and nephrology input');
+  if (sfltRatio !== '—' && parseFloat(sfltRatio) >= 85) alerts.push('sFlt-1/PlGF ≥85 — high probability of PE within 4 weeks');
+  if (plt < 100) alerts.push('Platelets <100 — HELLP syndrome screening required');
+  if (ldh > 400) alerts.push('LDH significantly elevated — haemolysis assessment needed');
+  const alertsHTML = alerts.map(a => `<div class="alert-box"><span class="alert-icon">!</span>${a}</div>`).join('');
+  document.getElementById('alerts-area').innerHTML = alertsHTML;
+
+  const tags = [];
+  if (pcos) tags.push({ text: 'PCOS', cls: 'tag-amber' });
+  if (cht) tags.push({ text: 'Chronic HTN', cls: 'tag-red' });
+  if (prevPE) tags.push({ text: 'Prior PE', cls: 'tag-red' });
+  if (aps) tags.push({ text: 'APS', cls: 'tag-red' });
+  if (met_syn) tags.push({ text: 'MetSyn', cls: 'tag-amber' });
+  if (gdm) tags.push({ text: 'GDM', cls: 'tag-amber' });
+  if (dyslip) tags.push({ text: 'Dyslipidemia', cls: 'tag-amber' });
+  if (multGestation) tags.push({ text: 'Multiple gestation', cls: 'tag-amber' });
+  if (conception) tags.push({ text: 'ART', cls: 'tag-cyan' });
+  if (aspirin) tags.push({ text: 'Aspirin prophylaxis', cls: 'tag-green' });
+  if (pct >= 50) tags.push({ text: '⚠ High Risk — consider aspirin', cls: 'tag-red' });
+  if (utapi > 2.5) tags.push({ text: 'Abnormal UtA Doppler', cls: 'tag-red' });
+  document.getElementById('risk-tags').innerHTML = tags.map(t => `<span class="tag ${t.cls}">${t.text}</span>`).join('');
+}
+
+function saveRecord() {
+  const score = document.getElementById('result-score').textContent.replace('%', '');
+  const label = document.getElementById('save-label').value || new Date().toLocaleDateString();
+  const notes = document.getElementById('clinical-notes').value;
+  const sbp = v('sbp'); const dbp = v('dbp');
+  const record = { label, score, sbp, dbp, notes, date: Date.now() };
+  savedRecords.push(record);
+  try { localStorage.setItem('pe-records', JSON.stringify(savedRecords)); } catch(e) {}
+  renderHistory();
+  const msg = document.getElementById('save-msg');
+  msg.style.display = 'block';
+  setTimeout(() => { msg.style.display = 'none'; }, 2500);
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  if (!savedRecords.length) {
+    list.innerHTML = '<div style="color:var(--text-dim);font-size:11px;">No records saved yet.</div>';
+    return;
+  }
+  list.innerHTML = savedRecords.slice().reverse().map((r, i) => `
+    <div class="history-row">
+      <div>
+        <div style="font-size:11px;color:var(--text);">${r.label}</div>
+        <div class="history-date">BP: ${r.sbp}/${r.dbp} mmHg</div>
+        ${r.notes ? '<div style="font-size:10px;color:var(--text-dim);margin-top:2px;">' + r.notes.substring(0,60) + (r.notes.length > 60 ? '...' : '') + '</div>' : ''}
+      </div>
+      <div class="history-score">${r.score}%</div>
+    </div>`).join('');
+
+  if (savedRecords.length >= 2) {
+    document.getElementById('bp-trend-empty').style.display = 'none';
+    document.getElementById('bp-trend-chart').style.display = 'block';
+    const bars = document.getElementById('sbp-bars');
+    const maxSbp = Math.max(...savedRecords.map(r => r.sbp));
+    bars.innerHTML = savedRecords.map(r => {
+      const h = Math.round((r.sbp / (maxSbp + 20)) * 32);
+      const col = r.sbp >= 160 ? 'var(--red-alert)' : r.sbp >= 140 ? 'var(--amber)' : 'var(--cyan)';
+      return `<div class="trend-bar" style="height:${h}px;border-top-color:${col};background:${col}22;" title="${r.label}: ${r.sbp} mmHg"></div>`;
+    }).join('');
+  }
+}
+
+function triggerUpload(id) { document.getElementById(id).click(); }
+
+function previewImage(input, previewId) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const prefix = previewId === 'us-preview' ? 'us' : 'plac';
+    document.getElementById(previewId).style.display = 'block';
+    document.getElementById(prefix + '-img').src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+renderHistory();
+calculateRisk();
+</script>

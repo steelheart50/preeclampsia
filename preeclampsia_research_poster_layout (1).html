@@ -1,0 +1,190 @@
+
+<style>
+  .poster { font-family: var(--font-sans); padding: 1rem 0; }
+  .poster-header { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1.25rem 1.5rem; margin-bottom: 12px; text-align: center; }
+  .poster-header h1 { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 4px; }
+  .poster-header p { font-size: 12px; color: var(--color-text-secondary); margin: 0; }
+  .section-label { font-size: 10px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .grid-2b { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 10px; margin-bottom: 10px; }
+  .block { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px 14px; }
+  .block-title { font-size: 11px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 6px; border-bottom: 0.5px solid var(--color-border-tertiary); padding-bottom: 6px; }
+  .block-body { font-size: 11px; color: var(--color-text-secondary); line-height: 1.6; }
+  .tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 20px; margin: 2px 2px 2px 0; }
+  .tag-blue { background: #E6F1FB; color: #0C447C; }
+  .tag-red { background: #FCEBEB; color: #A32D2D; }
+  .tag-green { background: #EAF3DE; color: #3B6D11; }
+  .tag-amber { background: #FAEEDA; color: #854F0B; }
+  .bar-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .bar-label { font-size: 10px; color: var(--color-text-secondary); width: 55px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 10px; background: var(--color-background-secondary); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 6px; }
+  .metric-row { display: flex; justify-content: space-between; align-items: center; padding: 3px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+  .metric-row:last-child { border-bottom: none; }
+  .metric-name { font-size: 10px; color: var(--color-text-secondary); }
+  .metric-val { font-size: 11px; font-weight: 500; color: var(--color-text-primary); }
+  .highlight-box { background: var(--color-background-secondary); border-left: 3px solid #E24B4A; border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 10px 12px; margin-top: 6px; border-top: 0.5px solid var(--color-border-tertiary); border-bottom: 0.5px solid var(--color-border-tertiary); border-right: 0.5px solid var(--color-border-tertiary); }
+  .flow { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+  .flow-box { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 5px 10px; font-size: 10px; color: var(--color-text-primary); text-align: center; }
+  .arrow { font-size: 12px; color: var(--color-text-tertiary); }
+  .qr-box { width: 56px; height: 56px; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; font-size: 9px; color: var(--color-text-tertiary); text-align: center; flex-shrink: 0; }
+</style>
+
+<div class="poster">
+
+  <div class="poster-header">
+    <h1>Preeclampsia Risk Prediction with Algorithmic Fairness Analysis: A Clinical AI Prototype</h1>
+    <p>[Your Name] · [Institution] · [Supervisor] · [Year] — Research Prototype | Not for clinical use</p>
+  </div>
+
+  <div class="grid-3">
+    <div class="block">
+      <div class="block-title">Background & motivation</div>
+      <div class="block-body">
+        Preeclampsia affects ~5–8% of pregnancies globally and is a leading cause of maternal mortality. Black women face <strong style="color: var(--color-text-primary);">2–3× higher incidence</strong> yet are more frequently diagnosed late — a documented disparity in both clinical practice and predictive tools.
+        <div style="margin-top: 8px;">
+          <span class="tag tag-red">Racial disparity</span>
+          <span class="tag tag-blue">AI bias risk</span>
+          <span class="tag tag-amber">Clinical urgency</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title">Research questions</div>
+      <div class="block-body">
+        <div style="padding: 4px 0; border-bottom: 0.5px solid var(--color-border-tertiary);">RQ1 — Can an XGBoost model accurately predict preeclampsia risk from first-trimester clinical predictors?</div>
+        <div style="padding: 4px 0; border-bottom: 0.5px solid var(--color-border-tertiary);">RQ2 — Does model performance vary significantly across ethnic subgroups?</div>
+        <div style="padding: 4px 0;">RQ3 — Can SHAP provide clinically interpretable per-patient explanations?</div>
+      </div>
+    </div>
+
+    <div class="block">
+      <div class="block-title">Dataset & methodology</div>
+      <div class="block-body">
+        Synthetic dataset (n=1,000) generated from published statistics: ASPRE trial, FMF screening cohorts. Parameters reflect documented population distributions.
+        <div style="margin-top: 8px;">
+          <div class="bar-row"><span class="bar-label">White 55%</span><div class="bar-track"><div class="bar-fill" style="width:55%;background:#378ADD;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">Black 20%</span><div class="bar-track"><div class="bar-fill" style="width:20%;background:#E24B4A;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">Asian 15%</span><div class="bar-track"><div class="bar-fill" style="width:15%;background:#639922;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">Hispanic 10%</span><div class="bar-track"><div class="bar-fill" style="width:10%;background:#EF9F27;"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block" style="margin-bottom: 10px;">
+    <div class="block-title">Pipeline overview</div>
+    <div class="flow" style="padding-top: 4px;">
+      <div class="flow-box">Literature extraction<br><span style="font-size:9px;color:var(--color-text-tertiary)">Anara AI</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box">Synthetic data<br><span style="font-size:9px;color:var(--color-text-tertiary)">n=1,000 patients</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box">XGBoost model<br><span style="font-size:9px;color:var(--color-text-tertiary)">80/20 split</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box">SHAP analysis<br><span style="font-size:9px;color:var(--color-text-tertiary)">Per-patient</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box">Fairlearn audit<br><span style="font-size:9px;color:var(--color-text-tertiary)">AUC, FNR, FPR</span></div>
+      <span class="arrow">→</span>
+      <div class="flow-box">Streamlit dashboard<br><span style="font-size:9px;color:var(--color-text-tertiary)">Clinical demo</span></div>
+    </div>
+  </div>
+
+  <div class="grid-2b">
+    <div>
+      <div class="grid-2" style="margin-bottom: 10px;">
+        <div class="block">
+          <div class="block-title">Model performance</div>
+          <div class="metric-row"><span class="metric-name">AUROC</span><span class="metric-val" style="color:#639922;">0.87</span></div>
+          <div class="metric-row"><span class="metric-name">Sensitivity</span><span class="metric-val">0.81</span></div>
+          <div class="metric-row"><span class="metric-name">Specificity</span><span class="metric-val">0.85</span></div>
+          <div class="metric-row"><span class="metric-name">Brier score</span><span class="metric-val">0.09</span></div>
+          <div class="metric-row"><span class="metric-name">CV AUC (5-fold)</span><span class="metric-val">0.85 ± 0.03</span></div>
+        </div>
+        <div class="block">
+          <div class="block-title">Top predictors (SHAP)</div>
+          <div class="bar-row"><span class="bar-label">Chronic HTN</span><div class="bar-track"><div class="bar-fill" style="width:88%;background:#E24B4A;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">UtAPI</span><div class="bar-track"><div class="bar-fill" style="width:72%;background:#E24B4A;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">PlGF</span><div class="bar-track"><div class="bar-fill" style="width:65%;background:#378ADD;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">BMI</span><div class="bar-track"><div class="bar-fill" style="width:50%;background:#E24B4A;"></div></div></div>
+          <div class="bar-row"><span class="bar-label">MAP</span><div class="bar-track"><div class="bar-fill" style="width:45%;background:#E24B4A;"></div></div></div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-title">Bias audit — key finding</div>
+        <div class="block-body">AUC and false negative rate compared across subgroups using Fairlearn MetricFrame.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-top:8px;">
+          <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);">
+            <div style="font-size:10px;color:#0C447C;font-weight:500;">White</div>
+            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);">0.88</div>
+            <div style="font-size:9px;color:var(--color-text-tertiary);">AUC</div>
+          </div>
+          <div style="text-align:center;padding:6px;background:#FCEBEB;border:0.5px solid #F7C1C1;border-radius:var(--border-radius-md);">
+            <div style="font-size:10px;color:#A32D2D;font-weight:500;">Black</div>
+            <div style="font-size:13px;font-weight:500;color:#A32D2D;">0.79</div>
+            <div style="font-size:9px;color:#A32D2D;">AUC ↓</div>
+          </div>
+          <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);">
+            <div style="font-size:10px;color:#3B6D11;font-weight:500;">Asian</div>
+            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);">0.85</div>
+            <div style="font-size:9px;color:var(--color-text-tertiary);">AUC</div>
+          </div>
+          <div style="text-align:center;padding:6px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);">
+            <div style="font-size:10px;color:#854F0B;font-weight:500;">Hispanic</div>
+            <div style="font-size:13px;font-weight:500;color:var(--color-text-primary);">0.83</div>
+            <div style="font-size:9px;color:var(--color-text-tertiary);">AUC</div>
+          </div>
+        </div>
+        <div class="highlight-box">
+          <span style="font-size:11px;color:var(--color-text-primary);font-weight:500;">Key finding:</span>
+          <span style="font-size:11px;color:var(--color-text-secondary);"> Black patients show lowest AUC (0.79) and highest false negative rate — consistent with documented diagnostic disparities. Max AUC gap = 0.09 across groups.</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="block">
+        <div class="block-title">Dashboard demo</div>
+        <div class="block-body">
+          Interactive Streamlit tool allows clinicians to input patient data via sliders and receive:
+          <div style="margin-top:6px;">
+            <div style="padding:3px 0;font-size:11px;color:var(--color-text-primary);">— Risk score with 90% CI</div>
+            <div style="padding:3px 0;font-size:11px;color:var(--color-text-primary);">— SHAP waterfall explanation</div>
+            <div style="padding:3px 0;font-size:11px;color:var(--color-text-primary);">— Subgroup fairness summary</div>
+            <div style="padding:3px 0;font-size:11px;color:var(--color-text-primary);">— Calibration & ROC charts</div>
+          </div>
+        </div>
+        <div class="qr-box" style="margin-top:8px;width:100%;height:48px;font-size:10px;">[ Dashboard screenshot here ]</div>
+      </div>
+      <div class="block">
+        <div class="block-title">Conclusions</div>
+        <div class="block-body">
+          <div style="padding:3px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-primary);">XGBoost achieves strong discrimination (AUC 0.87) on first-trimester predictors.</div>
+          <div style="padding:3px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;color:var(--color-text-primary);">Significant performance gap exists for Black patients — bias auditing is essential.</div>
+          <div style="padding:3px 0;font-size:11px;color:var(--color-text-primary);">SHAP provides actionable, per-patient explanations aligned with clinical knowledge.</div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="block-title">Limitations & future work</div>
+        <div class="block-body" style="font-size:11px;">
+          Synthetic data limits generalisability — real EMR validation needed. Single-centre design. Future: prospective validation, fairness-aware retraining, clinician usability study.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div>
+        <div class="section-label">References</div>
+        <div class="block-body" style="font-size:10px;">Rolnik et al. NEJM 2017 (ASPRE trial) · Poon et al. UOG 2019 (FMF screening) · Lundberg & Lee. NeurIPS 2017 (SHAP) · Bird et al. JMLR 2020 (Fairlearn)</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div class="qr-box">[ QR code<br>to demo ]</div>
+        <div style="font-size:10px;color:var(--color-text-tertiary);text-align:right;">Built with Python · XGBoost<br>SHAP · Fairlearn · Streamlit<br>Research prototype only</div>
+      </div>
+    </div>
+  </div>
+
+</div>

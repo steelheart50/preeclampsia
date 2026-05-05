@@ -1,0 +1,304 @@
+
+[     UTC     ] Logs for preeclampsia-tables-n4sqpaghgggaygjmcjpabn.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[16:44:43] 🖥 Provisioning machine...
+[16:44:43] 🎛 Preparing system...
+[16:44:43] ⛓ Spinning up manager process...
+[16:44:32] 🚀 Starting up repository: 'preeclampsia-tables', branch: 'main', main module: 'app.py'
+[16:44:32] 🐙 Cloning repository...
+[16:44:34] 🐙 Cloning into '/mount/src/preeclampsia-tables'...
+
+[16:44:34] 🐙 Cloned repository!
+[16:44:34] 🐙 Pulling code changes from Github...
+[16:44:35] 📦 Processing dependencies...
+
+──────────────────────────────────────── uv ───────────────────────────────────────────
+
+Using uv pip install.
+Using Python 3.14.4 environment at /home/adminuser/venv
+Resolved 62 packages in 628ms
+  × Failed to download and build `scipy==1.15.3`
+  ╰─▶ Build backend failed to build wheel through `build_wheel` (exit status:
+      1)
+
+      [stdout]
+      + meson setup
+      /home/adminuser/.cache/uv/sdists-v6/pypi/scipy/1.15.3/Hwq3i03Y-Ymb3kHBSGKkZ/src
+      /home/adminuser/.cache/uv/sdists-v6/pypi/scipy/1.15.3/Hwq3i03Y-Ymb3kHBSGKkZ/src/.mesonpy-mh9_xsjy
+      -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md
+      --native-file=/home/adminuser/.cache/uv/sdists-v6/pypi/scipy/1.15.3/Hwq3i03Y-Ymb3kHBSGKkZ/src/.mesonpy-mh9_xsjy/meson-python-native-file.ini
+      The Meson build system
+      Version: 1.11.1
+      Source dir:
+      /home/adminuser/.cache/uv/sdists-v6/pypi/scipy/1.15.3/Hwq3i03Y-Ymb3kHBSGKkZ/src
+      Build dir:
+      /home/adminuser/.cache/uv/sdists-v6/pypi/scipy/1.15.3/Hwq3i03Y-Ymb3kHBSGKkZ/src/.mesonpy-mh9_xsjy
+      Build type: native build
+      Project name: scipy
+      Project version: 1.15.3
+      C compiler for the host machine: cc (gcc 14.2.0 "cc (Debian 14.2.0-19)
+      14.2.0")
+      C linker for the host machine: cc ld.bfd 2.44
+      C++ compiler for the host machine: c++ (gcc 14.2.0 "c++ (Debian
+      14.2.0-19) 14.2.0")
+      C++ linker for the host machine: c++ ld.bfd 2.44
+      Cython compiler for the host machine: cython (cython 3.0.12)
+      Host machine cpu family: x86_64
+      Host machine cpu: x86_64
+      Program python found: YES
+      (/home/adminuser/.cache/uv/builds-v0/.tmp6gqp8f/bin/python)
+      Did not find pkg-config by name 'pkg-config'
+      Found pkg-config: NO
+      Run-time dependency python found: YES 3.14
+      Program cython found: YES
+      (/home/adminuser/.cache/uv/builds-v0/.tmp6gqp8f/bin/cython)
+      Compiler for C supports arguments -Wno-unused-but-set-variable: YES
+      Compiler for C supports arguments -Wno-unused-function: YES
+      Compiler for C supports arguments -Wno-conversion: YES
+      Compiler for C supports arguments -Wno-misleading-indentation: YES
+      Library m found: YES
+
+      ../meson.build:80:0: ERROR: Unknown compiler(s): [['gfortran'],
+      ['flang-new'], ['flang'], ['nvfortran'], ['pgfortran'], ['ifort'],
+      ['ifx'], ['g95']]
+      The following exception(s) were encountered:
+      Running `gfortran --help` gave "[Errno 2] No such file or directory:
+      'gfortran'"
+      Running `gfortran --version` gave "[Errno 2] No such file or directory:
+      'gfortran'"
+      Running `gfortran -V` gave "[Errno 2] No such file or directory:
+      'gfortran'"
+      Running `flang-new --help` gave "[Errno 2] No such file or directory:
+      'flang-new'"
+      Running `flang-new --version` gave "[Errno 2] No such file or directory:
+      'flang-new'"
+      Running `flang-new -V` gave "[Errno 2] No such file or directory:
+      'flang-new'"
+      Running `flang --help` gave "[Errno 2] No such file or directory:
+      'flang'"
+      Running `flang --version` gave "[Errno 2] No such file or directory:
+      'flang'"
+      Running `flang -V` gave "[Errno 2] No such file or directory: 'flang'"
+      Running `nvfortran --help` gave "[Errno 2] No such file or directory:
+      'nvfortran'"
+      Running `nvfortran --version` gave "[Errno 2] No such file or directory:
+      'nvfortran'"
+      Running `nvfortran -V` gave "[Errno 2] No such file or directory:
+      'nvfortran'"
+      Running `pgfortran --help` gave "[Errno 2] No such file or directory:
+      'pgfortran'"
+      Running `pgfortran --version` gave "[Errno 2] No such file or directory:
+      'pgfortran'"
+      Running `pgfortran -V` gave "[Errno 2] No such file or directory:
+      'pgfortran'"
+      Running `ifort --help` gave "[Errno 2] No such file or directory:
+      'ifort'"
+      Running `ifort --version` gave "[Errno 2] No such file or directory:
+      'ifort'"
+      Running `ifort -V` gave "[Errno 2] No such file or directory: 'ifort'"
+      Running `ifx --help` gave "[Errno 2] No such file or directory: 'ifx'"
+      Running `ifx --version` gave "[Errno 2] No such file or directory:
+      'ifx'"
+      Running `ifx -V` gave "[Errno 2] No such file or directory: 'ifx'"
+      Running `g95 --help` gave "[Errno 2] No such file or directory: 'g95'"
+      Running `g95 --version` gave "[Errno 2] No such file or directory:
+      'g95'"
+      Running `g95 -V` gave "[Errno 2] No such file or directory: 'g95'"
+
+      A full log can be found at
+      /home/adminuser/.cache/uv/sdists-v6/pypi/scipy/1.15.3/Hwq3i03Y-Ymb3kHBSGKkZ/src/.mesonpy-mh9_xsjy/meson-logs/meson-log.txt
+
+  help: `scipy` was included because `shap==0.51.0` depends on `scipy`
+Checking if Streamlit is installed
+Installing rich for an improved exception logging
+Using uv pip install.
+Using Python 3.14.4 environment at /home/adminuser/venv
+Resolved 4 packages in 127ms
+Prepared 4 packages in 236ms
+Installed 4 packages in 116ms
+ + markdown-it-py==4.0.0
+ +[2026-05-05 16:44:58.075092]  mdurl==0.1.2
+ + pygments==2.20.0
+ + rich==15.0.0
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+
+──────────────────────────────────────── pip ───────────────────────────────────────────
+
+Using standard pip install.
+Collecting pandas (from -r /mount/src/preeclampsia-tables/requirements.txt (line 1))
+  Downloading pandas-3.0.2-cp314-cp314-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (79 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 79.5/79.5 kB 5.9 MB/s eta 0:00:00[2026-05-05 16:44:59.744112] 
+Collecting numpy (from -r /mount/src/preeclampsia-tables/requirements.txt (line 2))
+  Downloading numpy-2.4.4-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting scikit-learn (from -r /mount/src/preeclampsia-tables/requirements.txt (line 3))
+  Downloading scikit_learn-1.8.0-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (11 kB)
+Collecting xgboost>=2.0.0 (from -r /mount/src/preeclampsia-tables/requirements.txt (line 4))
+  Downloading xgboost-3.2.0-py3-none-manylinux_2_28_x86_64.whl.metadata (2.1 kB)
+Collecting shap (from -r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading shap-0.51.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (25 kB)
+Collecting fairlearn (from -r /mount/src/preeclampsia-tables/requirements.txt (line 6))
+  Downloading fairlearn-0.13.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting matplotlib (from -r /mount/src/preeclampsia-tables/requirements.txt (line 7))
+  Downloading matplotlib-3.10.9-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (52 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.8/52.8 kB 343.2 MB/s eta 0:00:00[2026-05-05 16:45:00.591934] 
+Collecting seaborn (from -r /mount/src/preeclampsia-tables/requirements.txt (line 8))
+  Downloading seaborn-0.13.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting joblib (from -r /mount/src/preeclampsia-tables/requirements.txt (line 9))
+  Downloading joblib-1.5.3-py3-none-any.whl.metadata (5.5 kB)
+Collecting streamlit (from -r /mount/src/preeclampsia-tables/requirements.txt (line 10))
+  Downloading streamlit-1.57.0-py3-none-any.whl.metadata (9.6 kB)
+Collecting python-dateutil>=2.8.2 (from pandas->-r /mount/src/preeclampsia-tables/requirements.txt (line 1))
+  Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting scipy>=1.10.0 (from scikit-learn->-r /mount/src/preeclampsia-tables/requirements.txt (line 3))
+  Downloading scipy-1.17.1-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (62 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 62.1/62.1 kB 399.1 MB/s eta 0:00:00[2026-05-05 16:45:01.184973] 
+Collecting threadpoolctl>=3.2.0 (from scikit-learn->-r /mount/src/preeclampsia-tables/requirements.txt (line 3))
+  Downloading threadpoolctl-3.6.0-py3-none-any.whl.metadata (13 kB)
+Collecting nvidia-nccl-cu12 (from xgboost>=2.0.0->-r /mount/src/preeclampsia-tables/requirements.txt (line 4))
+  Downloading nvidia_nccl_cu12-2.30.4-py3-none-manylinux_2_18_x86_64.whl.metadata (2.1 kB)
+Collecting tqdm>=4.27.0 (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading tqdm-4.67.3-py3-none-any.whl.metadata (57 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 57.7/57.7 kB 88.1 MB/s eta 0:00:00[2026-05-05 16:45:01.463871] 
+Collecting packaging>20.9 (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading packaging-26.2-py3-none-any.whl.metadata (3.5 kB)
+Collecting slicer==0.0.8 (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading slicer-0.0.8-py3-none-any.whl.metadata (4.0 kB)
+Collecting numba (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading numba-0.65.1-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (2.9 kB)
+Collecting llvmlite (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading llvmlite-0.47.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (5.0 kB)
+Collecting cloudpickle (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading cloudpickle-3.1.2-py3-none-any.whl.metadata (7.1 kB)
+Collecting typing-extensions (from shap->-r /mount/src/preeclampsia-tables/requirements.txt (line 5))
+  Downloading typing_extensions-4.15.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting narwhals>=1.14.0 (from fairlearn->-r /mount/src/preeclampsia-tables/requirements.txt (line 6))
+  Downloading narwhals-2.20.0-py3-none-any.whl.metadata (15 kB)
+Collecting scipy>=1.10.0 (from scikit-learn->-r /mount/src/preeclampsia-tables/requirements.txt (line 3))
+  Downloading scipy-1.15.3.tar.gz (59.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 59.4/59.4 MB 246.0 MB/s eta 0:00:00[2026-05-05 16:45:02.345254] 
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Installing backend dependencies: started
+  Installing backend dependencies: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Preparing metadata (pyproject.toml) did not run successfully.
+  │ exit code: 1
+  ╰─> [54 lines of output]
+      + meson setup /tmp/pip-install-yevrgluz/scipy_88fa605a8d3f40d3a3888fcb435da918 /tmp/pip-install-yevrgluz/scipy_88fa605a8d3f40d3a3888fcb435da918/.mesonpy-hfp6nq9a -Dbuildtype=release -Db_ndebug=if-release -Db_vscrt=md --native-file=/tmp/pip-install-yevrgluz/scipy_88fa605a8d3f40d3a3888fcb435da918/.mesonpy-hfp6nq9a/meson-python-native-file.ini
+      The Meson build system
+      Version: 1.11.1
+      Source dir: /tmp/pip-install-yevrgluz/scipy_88fa605a8d3f40d3a3888fcb435da918
+      Build dir: /tmp/pip-install-yevrgluz/scipy_88fa605a8d3f40d3a3888fcb435da918/.mesonpy-hfp6nq9a
+      Build type: native build
+      Project name: scipy
+      Project version: 1.15.3
+      C compiler for the host machine: cc (gcc 14.2.0 "cc (Debian 14.2.0-19) 14.2.0")
+      C linker for the host machine: cc ld.bfd 2.44
+      C++ compiler for the host machine: c++ (gcc 14.2.0 "c++ (Debian 14.2.0-19) 14.2.0")
+      C++ linker for the host machine: c++ ld.bfd 2.44
+      Cython compiler for the host machine: cython (cython 3.0.12)
+      Host machine cpu family: x86_64
+      Host machine cpu: x86_64
+      Program python found: YES (/home/adminuser/venv/bin/python)
+      Did not find pkg-config by name 'pkg-config'
+      Found pkg-config: NO
+      Run-time dependency python found: YES 3.14
+      Program cython found: YES (/tmp/pip-build-env-gkmrxrig/overlay/bin/cython)
+      Compiler for C supports arguments -Wno-unused-but-set-variable: YES
+      Compiler for C supports arguments -Wno-unused-function: YES
+      Compiler for C supports arguments -Wno-conversion: YES
+      Compiler for C supports arguments -Wno-misleading-indentation: YES
+      Library m found: YES
+      
+      ../meson.build:80:0: ERROR: Unknown compiler(s): [['gfortran'], ['flang-new'], ['flang'], ['nvfortran'], ['pgfortran'], ['ifort'], ['ifx'], ['g95']]
+      The following exception(s) were encountered:
+      Running `gfortran --help` gave "[Errno 2] No such file or directory: 'gfortran'"
+      Running `gfortran --version` gave "[Errno 2] No such file or directory: 'gfortran'"
+      Running `gfortran -V` gave "[Errno 2] No such file or directory: 'gfortran'"
+      Running `flang-new --help` gave "[Errno 2] No such file or directory: 'flang-new'"
+      Running `flang-new --version` gave "[Errno 2] No such file or directory: 'flang-new'"
+      Running `flang-new -V` gave "[Errno 2] No such file or directory: 'flang-new'"
+      Running `flang --help` gave "[Errno 2] No such file or directory: 'flang'"
+      Running `flang --version` gave "[Errno 2] No such file or directory: 'flang'"
+      Running `flang -V` gave "[Errno 2] No such file or directory: 'flang'"
+      Running `nvfortran --help` gave "[Errno 2] No such file or directory: 'nvfortran'"
+      Running `nvfortran --version` gave "[Errno 2] No such file or directory: 'nvfortran'"
+      Running `nvfortran -V` gave "[Errno 2] No such file or directory: 'nvfortran'"
+      Running `pgfortran --help` gave "[Errno 2] No such file or directory: 'pgfortran'"
+      Running `pgfortran --version` gave "[Errno 2] No such file or directory: 'pgfortran'"
+      Running `pgfortran -V` gave "[Errno 2] No such file or directory: 'pgfortran'"
+      Running `ifort --help` gave "[Errno 2] No such file or directory: 'ifort'"
+      Running `ifort --version` gave "[Errno 2] No such file or directory: 'ifort'"
+      Running `ifort -V` gave "[Errno 2] No such file or directory: 'ifort'"
+      Running `ifx --help` gave "[Errno 2] No such file or directory: 'ifx'"
+      Running `ifx --version` gave "[Errno 2] No such file or directory: 'ifx'"
+      Running `ifx -V` gave "[Errno 2] No such file or directory: 'ifx'"
+      Running `g95 --help` gave "[Errno 2] No such file or directory: 'g95'"
+      Running `g95 --version` gave "[Errno 2] No such file or directory: 'g95'"
+      Running `g95 -V` gave "[Errno 2] No such file or directory: 'g95'"
+      
+      A full log can be found at /tmp/pip-install-yevrgluz/scipy_88fa605a8d3f40d3a3888fcb435da918/.mesonpy-hfp6nq9a/meson-logs/meson-log.txt
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: metadata-generation-failed
+
+× Encountered error while generating package metadata.
+╰─> See above for output.
+
+note: This is an issue with the package mentioned above, not pip.
+hint: See above for details.
+
+[notice] A new release of pip is available: 24.0 -> 26.1.1
+[notice] To update, run: pip install --upgrade pip
+Checking if Streamlit is installed
+Installing rich for an improved exception logging
+Using standard pip install.
+Collecting rich>=10.14.0
+  Downloading rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=10.14.0)
+  Downloading markdown_it_py-4.0.0-py3-none-any.whl.metadata (7.3 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=10.14.0)
+  Downloading pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=10.14.0)
+  Downloading mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Downloading rich-15.0.0-py3-none-any.whl (310 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 310.7/310.7 kB 13.6 MB/s eta 0:00:00[2026-05-05 16:45:26.650769] 
+Downloading markdown_it_py-4.0.0-py3-none-any.whl (87 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 87.3/87.3 kB 190.7 MB/s eta 0:00:00[2026-05-05 16:45:26.664887] 
+Downloading pygments-2.20.0-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 75.3 MB/s eta 0:00:00[2026-05-05 16:45:26.695668] 
+Downloading mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Installing collected packages: pygments, mdurl, markdown-it-py, rich
+  Attempting uninstall: pygments
+    Found existing installation: Pygments 2.20.0
+    Uninstalling Pygments-2.20.0:
+      Successfully uninstalled Pygments-2.20.0
+  Attempting uninstall: mdurl
+    Found existing installation: mdurl 0.1.2
+    Uninstalling mdurl-0.1.2:
+      Successfully uninstalled mdurl-0.1.2
+  Attempting uninstall: markdown-it-py
+    Found existing installation: markdown-it-py 4.0.0
+    Uninstalling markdown-it-py-4.0.0:
+      Successfully uninstalled markdown-it-py-4.0.0
+  Attempting uninstall: rich
+    Found existing installation: rich 15.0.0
+    Uninstalling rich-15.0.0:
+      Successfully uninstalled rich-15.0.0
+Successfully installed markdown-it-py-4.0.0 mdurl-0.1.2 pygments-2.20.0 rich-15.0.0
+
+[notice] A new release of pip is available: 24.0 -> 26.1.1
+[notice] To update, run: pip install --upgrade pip
+
+────────────────────────────────────────────────────────────────────────────────────────
+
+[16:45:30] ❗️ installer returned a non-zero exit code
+[16:45:30] ❗️ Error during processing dependencies! Please fix the error and push an update, or try restarting the app.
